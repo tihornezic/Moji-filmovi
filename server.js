@@ -17,7 +17,7 @@ const directorRouter = require('./routes/directors')
 app.set('view engine', 'ejs')
 // all of the different views of our files are gonna go for server
 app.set('views', __dirname + '/views') 
-// hook up express layouts
+// hooking up express layouts
 // every single file is going to be put inside this layout file so we don't have to duplicate 
 // all of the headers and footers of html
 app.set('layout', 'layouts/layout')
@@ -35,6 +35,7 @@ db.once('open', () => console.log('Connected to Mongoose'))
 //
 
 app.use('/', indexRouter)
+// every route inside directorRouter will be prepended with /directors
 app.use('/directors', directorRouter)
 
 app.listen(process.env.PORT || 3000)

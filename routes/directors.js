@@ -4,32 +4,54 @@ const Director = require('../models/director')
 
 
 // all directors route
-router.get('/', (req, res) => {
-    // render and specify the name of the file that you want to render
-    res.render('directors/index')
+router.get('/', async (req, res) => {
+    let searchOptions = {}
+    // req.query instead of req.body
+    // because a get request sends information through the query string
+    // and post request sends information throught the body
+        // if it is an empty string, don't filter by it
+    if(req.query.name !=null && req.query.name !== ''){
+        // 'i' case insensitive
+        searchOptions.name = new RegExp(req.query.name, 'i')
+    }
+    try {
+        // empty find({}) means it has no conditions
+        const directors = await Director.find(searchOptions)
+        // render and specify the name of the file that you want to render
+        res.render('directors/index', {
+            directors: directors, 
+            searchOptions: req.query
+        })
+    } catch {
+        res.redirect('/')
+    }
 })
 
 // new director route
-router.get('/new', (req, res)=>{
-    res.render('directors/new', {director: new Director()})
+router.get('/new', (req, res) => {
+    // variables to be sent to .ejs file
+    // this actually doesn't save it to the DB,
+    // but it does create new director that then we can save, update, delete in DB
+    // also creates object that we can use in our .ejs file
+    res.render('directors/new', { director: new Director() })
 })
 
 // create director route
-router.post('/', async (req, res)=>{
+router.post('/', async (req, res) => {
     const director = new Director({
         name: req.body.name
     })
-    try{
+    try {
         const newDirector = await director.save()
         // res.redirect(`directors/${newDirector.id}`)
         res.redirect(`directors`)
-    }catch{
+    } catch {
         res.render('directors/new', {
             director: director,
             errorMessage: 'Error creating Director'
         })
     }
-    
+
     // director.save((err, newDirector) =>{
     //     if(err){
     //         let locals = {errorMessage: `something went wrong`}

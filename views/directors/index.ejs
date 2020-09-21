@@ -1,1 +1,12 @@
-All Directors
+<h2>Pretraži redatelje</h2>
+<form action="/directors" method="GET">
+    <label">Ime</label>
+    <input type="text" name="name" value="<%= searchOptions.name %> ">
+    <button type="submit">Traži</button>
+</form>
+<br>
+<br>
+<!-- display all directors -->
+<% directors.forEach(director => { %>
+    <div><%= director.name %></div>
+<% }) %> 

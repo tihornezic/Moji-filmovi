@@ -1,0 +1,6 @@
+-------------------
+steps
+
+1. define routes (res.render) ...
+2. create .ejs'
+3. include them in layout.ejs
