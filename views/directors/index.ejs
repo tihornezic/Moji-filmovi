@@ -1,4 +1,5 @@
 <h2>Pretraži redatelje</h2>
+<!-- action is url where the form goes to -->
 <form action="/directors" method="GET">
     <label">Ime</label>
     <input type="text" name="name" value="<%= searchOptions.name %> ">
@@ -6,7 +7,10 @@
 </form>
 <br>
 <br>
+
 <!-- display all directors -->
+<!-- < % and % > to run code on the server -->
 <% directors.forEach(director => { %>
+    <!-- = tells server to create whatever text you have inside, output it as html to the page -->
     <div><%= director.name %></div>
 <% }) %> 

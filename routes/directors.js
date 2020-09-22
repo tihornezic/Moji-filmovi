@@ -9,11 +9,13 @@ router.get('/', async (req, res) => {
     // req.query instead of req.body
     // because a get request sends information through the query string
     // and post request sends information throught the body
+        // if we passed a name field in the search form
         // if it is an empty string, don't filter by it
     if(req.query.name !=null && req.query.name !== ''){
         // 'i' case insensitive
         searchOptions.name = new RegExp(req.query.name, 'i')
     }
+    // getting all directors
     try {
         // empty find({}) means it has no conditions
         const directors = await Director.find(searchOptions)
