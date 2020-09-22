@@ -1,0 +1,15 @@
+<!-- _ in file name means partial file, indicates it is not from server  -->
+<label>Naslov</label>
+<!-- = tells server to create whatever text you have inside, output it as html to the page -->
+<input type="text" name="title" value="<%= movie.title %>">
+
+<label>Redatelj</label>
+<select name="director">
+<% directors.forEach(director => { %> 
+    <% if(director.id === movie.director) { %> 
+        <option selected label ="<%= director.name %>" value="<%= director.id %>"></option>
+    <% } else { %> 
+        <option label="<%= director.name %>" value="<%= director.id %> "></option>
+    <% } %> 
+<% }) %> 
+</select>

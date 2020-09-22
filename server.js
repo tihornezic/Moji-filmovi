@@ -14,6 +14,7 @@ const bodyParser = require('body-parser')
 // './' relative to where we are
 const indexRouter = require('./routes/index')
 const directorRouter = require('./routes/directors')
+const movieRouter = require('./routes/movies')
 
 app.set('view engine', 'ejs')
 // all of the different views of our files are gonna go for server
@@ -39,5 +40,6 @@ db.once('open', () => console.log('Connected to Mongoose'))
 app.use('/', indexRouter)
 // every route inside directorRouter will be prepended with /directors
 app.use('/directors', directorRouter)
+app.use('/movies', movieRouter)
 
 app.listen(process.env.PORT || 3000)
