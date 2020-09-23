@@ -1,15 +1,38 @@
-<!-- _ in file name means partial file, indicates it is not from server  -->
-<label>Naslov</label>
-<!-- = tells server to create whatever text you have inside, output it as html to the page -->
-<input type="text" name="title" value="<%= movie.title %>">
-
-<label>Redatelj</label>
-<select name="director">
-<% directors.forEach(director => { %> 
-    <% if(director.id === movie.director) { %> 
-        <option selected label ="<%= director.name %>" value="<%= director.id %>"></option>
-    <% } else { %> 
+<div>
+    <!-- _ in file name means partial file, indicates it is not from server  -->
+    <label>Naslov</label>
+    <!-- = tells server to create whatever text you have inside, output it as html to the page -->
+    <input type="text" name="title" value="<%= movie.title %>">
+</div>
+<div>
+    <label>Redatelj</label>
+    <select name="director">
+        <% directors.forEach(director => { %>
+        <% if(director.id === movie.director) { %>
+        <option selected label="<%= director.name %>" value="<%= director.id %>"></option>
+        <% } else { %>
         <option label="<%= director.name %>" value="<%= director.id %> "></option>
-    <% } %> 
-<% }) %> 
-</select>
+        <% } %>
+        <% }) %>
+    </select>
+</div>
+<div>
+    <label>Godina izlaska</label>
+    <!-- value of movie.releaseYear is not in the correct form of type ="date" -->
+    <!-- so we need to convert it to the correct notation -->
+    <input type="date" name="releaseYear" value="<%= movie.releaseYear == null ? '' : 
+            // we only want date, and not time
+            movie.releaseYear.toISOString().split('T')[0] %>"> <!-- 2019-09-10T12:23 -->
+</div>
+<div>
+    <label>Trajanje</label>
+    <input type="number" name="duration" min="1" value="<%= movie.duration %>">
+</div>
+<div>
+    <label>Naslovna slika</label>
+    <input type="file" name="cover">
+</div>
+<div>
+    <label>Komentar</label>
+    <textarea name="description"><%= movie.description %></textarea>
+</div>

@@ -1,20 +1,29 @@
 // mongoose to connect to mongoDB
 const mongoose = require('mongoose')
 
+// path where all cover movie images are going to be stored
+// 
+const coverImageBasePath = 'uploads/movieCovers'
+
 const movieSchema = new mongoose.Schema({
     // defining different columns of our schema
     // they are JSON objects
+
+    // naslov
     title:{
         type: String,
         required: true
     },
+    // komentar/opis
     description:{
         type: String
     },
+    // godina izlaska
     releaseYear:{
         type: Date,
         required: true
     },
+    // trajanje
     duration:{
         type: Number,
         required: true
@@ -25,10 +34,12 @@ const movieSchema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
+    // cover slika
     coverImageName:{
         type: String,
         required: true
     },
+    // redatelj
     director:{
         // referencing another object inside of our collections
         type: mongoose.Schema.Types.ObjectId,
@@ -40,5 +51,8 @@ const movieSchema = new mongoose.Schema({
     }
 })
 
+
 // name of the table (schema)
 module.exports = mongoose.model('Movie', movieSchema)
+// now this can be imported inside of movies route
+module.exports.coverImageBasePath = coverImageBasePath
