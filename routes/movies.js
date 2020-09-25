@@ -8,11 +8,12 @@ const path = require('path')
 
 // built in node library
 // file system library
+// used for not allowing saving cover image if the error occured
+// (delete cover images we don't need anymore)
 const fs = require('fs')
 
 const Movie = require('../models/movie')
 const Director = require('../models/director')
-const { render } = require('ejs')
 
 // uploadPath is going to go from public folder into coverImageBasePath
 const uploadPath = path.join('public', Movie.coverImageBasePath)
@@ -31,7 +32,36 @@ const upload = multer({
 
 // all movies route
 router.get('/', async (req, res) => {
-    res.send('All movies')
+    let query = Movie.find()
+    // instead of if (req.query.title != null && req.query.title != '')
+    // just use:
+    if(req.query.title != null && req.query.title != ''){
+        // 'title' is db model parameter so esentially movie.title
+        query = query.regex('title', new RegExp(req.query.title, 'i'))
+    }
+    if(req.query.publishedBefore != null && req.query.publishedBefore != ''){
+        // .lte - less than or equal to
+        // if the releaseYear <= publishedBefore
+        // then we want to return that object
+        query = query.lte('releaseYear', req.query.publishedBefore)
+    }
+    if(req.query.publishedAfter != null && req.query.publishedAfter != ''){
+        // .gte - greater than or equal to
+        // if the releaseYear >= publishedBefore
+        // then we want to return that object
+        query = query.gte('releaseYear', req.query.publishedAfter)
+    }
+    try {
+        // executes query above defined
+        const movies = await query.exec()
+        res.render('movies/index', {
+            movies: movies,
+            searchOptions: req.query
+        })
+    } catch {
+        res.redirect('/')
+    }
+
 })
 
 // new movie route
@@ -60,47 +90,47 @@ router.post('/', upload.single('cover'), async (req, res) => {
         duration: parseInt(req.body.duration),
         // for cover image we first need to create cover image file on our file system
         // then get the name from that and then save that into movie object
-            // now we back and doing that above
+        // now we back and doing that above
         coverImageName: fileName,
         description: req.body.description
         // entire movie object created, now saving it:
     })
-    try{
+    try {
         const newMovie = await movie.save()
         // res.redirect(`movies/${newMovie.id}`)
         res.redirect(`movies`)
-    }catch{
-        if(movie.coverImageName != null){
-        removeBookCover(movie.coverImageName)
-    }
+    } catch {
+        if (movie.coverImageName != null) {
+            removeBookCover(movie.coverImageName)
+        }
         // passing existing movie object
         // hasError = true
         renderNewPage(res, movie, true)
     }
 })
 
-function removeBookCover(fileName){
+function removeBookCover(fileName) {
     // remove the file we don't want on our server
     // gets rid of any file that has the file name inside of movieCovers folder
-    fs.unlink(path.join(uploadPath, fileName), err =>{
-        if(err) console.error(err)
+    fs.unlink(path.join(uploadPath, fileName), err => {
+        if (err) console.error(err)
     })
 }
 
-async function renderNewPage(res, movie, hasError = false){
-    try{
+async function renderNewPage(res, movie, hasError = false) {
+    try {
         const directors = await Director.find({})
         // to dynamically create error message
         const params = {
             directors: directors,
             movie: movie
         }
-        if(hasError) params.errorMessage = 'Error Creating Movie'
+        if (hasError) params.errorMessage = 'Error Creating Movie'
         res.render('movies/new', params)
-    }catch{
+    } catch {
         res.redirect('/movies')
     }
 }
-   
+
 // exporting router
 module.exports = router
