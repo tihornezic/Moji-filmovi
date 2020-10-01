@@ -1,36 +1,36 @@
 const express = require('express')
 const router = express.Router()
 
-// for multer
-const multer = require('multer')
+// for multer - commented out since started using filepond
+// const multer = require('multer')
 // node.js built in path
-const path = require('path')
-
+/* const path = require('path')
+ */
 // built in node library
 // file system library
 // used for not allowing saving cover image if the error occured
 // delete cover images we don't need anymore
-const fs = require('fs')
+/* const fs = require('fs') */
 
 const Movie = require('../models/movie')
 const Director = require('../models/director')
 
 // uploadPath is going to go from public folder into coverImageBasePath
-const uploadPath = path.join('public', Movie.coverImageBasePath)
+/* const uploadPath = path.join('public', Movie.coverImageBasePath) */
 // array of all different image types that we accept
 // always default, always same for server: 
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
 // 
 
-const upload = multer({
-    // where the upload is going to be
-    // we don't want to hardcode it, but to come from movie model
-    dest: uploadPath, // is basically 'public/uploads/movieCovers'
-    // to filter which files server accepts
-    fileFilter: (req, file, callback) => {
-        callback(null, imageMimeTypes.includes(file.mimetype))
-    }
-})
+// const upload = multer({
+//     // where the upload is going to be
+//     // we don't want to hardcode it, but to come from movie model
+//     dest: uploadPath, // is basically 'public/uploads/movieCovers'
+//     // to filter which files server accepts
+//     fileFilter: (req, file, callback) => {
+//         callback(null, imageMimeTypes.includes(file.mimetype))
+//     }
+// })
 
 
 // all movies route
@@ -86,10 +86,12 @@ router.get('/new', async (req, res) => {
 // it's going to do all work behind the scenes for us to create that file and
 // upload it to the server and put it the correct folder
     // '/' is the meaning of the route at which you are listening for the request
-router.post('/', upload.single('cover'), async (req, res) => {
+    // deleted since using filepond , upload.single('cover')
+    // and uninstalling multer
+router.post('/', async (req, res) => {
     // this library is also going to add a variable to our request which is file
     // we're getting file name from the file if it exists and give it that name
-    const fileName = req.file != null ? req.file.filename : null
+    // const fileName = req.file != null ? req.file.filename : null
     // new movie object
     const movie = new Movie({
         // setting default values ?OR? creating new movie object ??? 
@@ -103,35 +105,38 @@ router.post('/', upload.single('cover'), async (req, res) => {
             // for that we're gonna use library multer (multi part forms)
                 // if we uploaded a file fileName is going to be equal to the name of that file
                 // but if not, it will be null, so we can send error msg
-        coverImageName: fileName,
+        // coverImageName: fileName,
         description: req.body.description
         // entire movie object created, now saving it:
     })
+    // uploading a movie file into our actual movie model
+    // saving cover image
+    saveCover(movie, req.body.cover)
+
     // saving a movie
     try {
         const newMovie = await movie.save()
         // res.redirect(`movies/${newMovie.id}`)
         res.redirect(`movies`)
     } catch {
-        // 
-        if (movie.coverImageName != null) {
-            removeBookCover(movie.coverImageName)
-        }
+    
         // passing existing movie object
         // hasError = true because we are in catch section which is for handling errors
         renderNewPage(res, movie, true)
     }
 })
 
+// since we're no longer storing our images on the server, we no longer need to worry about
+// removing book covers
 // function for removing cover image files which we don't want on our server
-function removeBookCover(fileName) {
+/* function removeBookCover(fileName) {
     // remove the file we don't want on our server
     // gets rid of any file that has the file name inside of movieCovers folder
     // we wanna pass it the path where this file is at
     fs.unlink(path.join(uploadPath, fileName), err => {
         if (err) console.error(err)
     })
-}
+} */
 
 async function renderNewPage(res, movie, hasError = false) {
     try {
@@ -146,6 +151,17 @@ async function renderNewPage(res, movie, hasError = false) {
         res.render('movies/new', params)
     } catch {
         res.redirect('/movies')
+    }
+}
+
+// stores files inside our db so we can use it inside heroku
+function saveCover(movie, coverEncoded){
+    if(coverEncoded == null) return
+    const cover = JSON.parse(coverEncoded)
+    if(cover != null && imageMimeTypes.includes(cover.type)){
+        // first parameter is our data and second is how we want to convert it
+        movie.coverImage = new Buffer.from(cover.data, 'base64')
+        movie.coverImageType = cover.type
     }
 }
 

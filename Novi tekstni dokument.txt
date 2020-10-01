@@ -4,3 +4,11 @@ steps
 1. define routes (res.render) ...
 2. create .ejs'
 3. include them in layout.ejs
+
+*heroku*
+
+-if our server restarts and when we refresh, our uploaded movie cover file is not there anymore
+->heroku does not persist our files on its server
+-solution: store our file in the db instead of file system of heroku server and that way use heroku to store
+all of our information (not ideal but aws servers cost money)
+->library: filepond https://pqina.nl/filepond/docs/

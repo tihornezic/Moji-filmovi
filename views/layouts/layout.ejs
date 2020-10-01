@@ -3,6 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- filepond -->
+    <!-- used plugins:  -->
+    <!-- 1. and 2. basic ones -->
+    <!-- 3. file encode -->
+    <!-- 4. image prefiew -->
+    <!-- 5. image resize -->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+    <!-- defer = to load and run after the entire body is done rendering  -->
+    <script defer src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script defer src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+    <script defer src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+    <script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <!--  -->
+    <!-- including our own script tag to set up filepond library -->
+    <script defer src="/javascripts/fileUpload.js"></script>
     <title>Moji filmovi</title>
 </head>
 <body>

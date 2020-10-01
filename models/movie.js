@@ -1,11 +1,11 @@
 // mongoose to connect to mongoDB
 const mongoose = require('mongoose')
-const path = require('path')
+/* const path = require('path') */
 
 // MULTER:
 // path to where all cover movie images are going to be stored
 // this 'uploads/movieCovers' below is going to be inside public folder
-const coverImageBasePath = 'uploads/movieCovers'
+/* const coverImageBasePath = 'uploads/movieCovers' */
 
 const movieSchema = new mongoose.Schema({
     // defining different columns of our schema
@@ -37,7 +37,12 @@ const movieSchema = new mongoose.Schema({
         default: Date.now
     },
     // cover slika
-    coverImageName: {
+    coverImage: {
+        // buffer of the data representing our entire image
+        type: Buffer,
+        required: true
+    },
+    coverImageType:{
         type: String,
         required: true
     },
@@ -62,7 +67,8 @@ const movieSchema = new mongoose.Schema({
 // reason to using normal function instead of arrow function:
 // we need to have access to this. property which is going to be linked to actual movie itself
 // we need that direct path to where that cover image is uploaded (index.ejs...\movies)
-movieSchema.virtual('coverImagePath').get(function () {
+
+/* movieSchema.virtual('coverImagePath').get(function () {
     // if there is a cover image, then we want to return path which leads to public\uploads\movieCovers
     if (this.coverImageName != null) {
         // to do this, we need path library
@@ -71,9 +77,17 @@ movieSchema.virtual('coverImagePath').get(function () {
         // '/' is route for object route folder which is public
         return path.join('/', coverImageBasePath, this.coverImageName) // public\uploads\movieCovers/coverImageName
     }
+}) */
+
+// instead of above old way, for filepond to work use:
+movieSchema.virtual('coverImagePath').get(function(){
+    if(this.coverImage != null && this.coverImageType !=null){
+        // returns proper string for our image source in order to display image from our buffer
+        return `data:${this.coverImageType};charset=utf-8;base64,${this.coverImage.toString('base64')}`
+    }
 })
 
 // name of the table (schema)
 module.exports = mongoose.model('Movie', movieSchema)
 // now this can be imported inside of movies route
-module.exports.coverImageBasePath = coverImageBasePath
+/* module.exports.coverImageBasePath = coverImageBasePath */
