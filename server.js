@@ -37,8 +37,10 @@ db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'))
 //
 
+// using all routes
 app.use('/', indexRouter)
 // every route inside directorRouter will be prepended with /directors
+// same applies to other routes
 app.use('/directors', directorRouter)
 app.use('/movies', movieRouter)
 

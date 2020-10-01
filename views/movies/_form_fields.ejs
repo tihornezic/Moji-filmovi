@@ -2,12 +2,17 @@
     <!-- _ in file name means partial file, indicates it is not from server  -->
     <label>Naslov</label>
     <!-- = tells server to create whatever text you have inside, output it as html to the page -->
+        <!-- value represents the default value -->
     <input type="text" name="title" value="<%= movie.title %>">
 </div>
 <div>
     <label>Redatelj</label>
+    <!-- directors dropdown -->
     <select name="director">
         <% directors.forEach(director => { %>
+        <!-- if a user has already selected an author -->
+            <!-- movie.director is id in movie model -->
+            <!-- it selects the very first one by default -->
         <% if(director.id === movie.director) { %>
         <option selected label="<%= director.name %>" value="<%= director.id %>"></option>
         <% } else { %>

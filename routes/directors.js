@@ -20,6 +20,7 @@ router.get('/', async (req, res) => {
         // empty find({}) means it has no conditions
         const directors = await Director.find(searchOptions)
         // render and specify the name of the file that you want to render
+        // and passing object which has directors and searchOptions
         res.render('directors/index', {
             directors: directors, 
             searchOptions: req.query
@@ -35,6 +36,7 @@ router.get('/new', (req, res) => {
     // this actually doesn't save it to the DB,
     // but it does create new director that then we can save, update, delete in DB
     // also creates object that we can use in our .ejs file
+        	// ? { director: new Director() }
     res.render('directors/new', { director: new Director() })
 })
 
@@ -46,7 +48,7 @@ router.post('/', async (req, res) => {
     try {
         const newDirector = await director.save()
         // res.redirect(`directors/${newDirector.id}`)
-        res.redirect(`directors`)
+        res.redirect('directors')
     } catch {
         res.render('directors/new', {
             director: director,

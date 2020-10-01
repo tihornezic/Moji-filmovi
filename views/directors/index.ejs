@@ -8,9 +8,14 @@
 <br>
 <br>
 
+<!-- <div><%= directors[0].name %></div>
+<br> -->
+
 <!-- display all directors -->
 <!-- < % and % > to run code on the server -->
+<!-- directors here is directors declared in directors route in line 24. -->
 <% directors.forEach(director => { %>
     <!-- = tells server to create whatever text you have inside, output it as html to the page -->
     <div><%= director.name %></div>
 <% }) %> 
+

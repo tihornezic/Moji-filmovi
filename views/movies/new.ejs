@@ -2,7 +2,8 @@
 <!-- action is url where the form goes to -->
 <!-- to use post method, you can only use forms -->
 
-<!-- multipart data which could include a file (for our cover image) -->
+<!-- MULTER: -->
+<!-- tells server that form is sending multipart data which could include a file (for our cover image) -->
 <form action="/movies" method="POST" enctype="multipart/form-data">
     <%- include('_form_fields')%> 
     <!-- anchor tags are used to link things  -->

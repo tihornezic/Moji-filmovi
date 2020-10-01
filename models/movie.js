@@ -2,8 +2,9 @@
 const mongoose = require('mongoose')
 const path = require('path')
 
-// path where all cover movie images are going to be stored
-// 
+// MULTER:
+// path to where all cover movie images are going to be stored
+// this 'uploads/movieCovers' below is going to be inside public folder
 const coverImageBasePath = 'uploads/movieCovers'
 
 const movieSchema = new mongoose.Schema({
@@ -41,8 +42,10 @@ const movieSchema = new mongoose.Schema({
         required: true
     },
     // redatelj
+    // referencing director from our director collection model
     director: {
         // referencing another object inside of our collections
+        // id of the director object
         type: mongoose.Schema.Types.ObjectId,
         // every movie has its director
         required: true,
@@ -52,6 +55,7 @@ const movieSchema = new mongoose.Schema({
     }
 })
 
+// for movies/index showing all movies from newest to oldest:
 // virtual property: act as any of these above
 // but it will actually derive its value from those variables
 // when we call movie.coverImagePath it's going to call this get function
@@ -62,9 +66,10 @@ movieSchema.virtual('coverImagePath').get(function () {
     // if there is a cover image, then we want to return path which leads to public\uploads\movieCovers
     if (this.coverImageName != null) {
         // to do this, we need path library
-        // we want to our root of our object which is going to be inside that public folder
+        // we want to join our root of our object which is going to be inside that public folder
         // and we want to append this coverImageBasePath that we created above
-        return path.join('/', coverImageBasePath, this.coverImageName)
+        // '/' is route for object route folder which is public
+        return path.join('/', coverImageBasePath, this.coverImageName) // public\uploads\movieCovers/coverImageName
     }
 })
 
