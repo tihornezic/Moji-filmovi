@@ -17,5 +17,18 @@
 <% directors.forEach(director => { %>
     <!-- = tells server to create whatever text you have inside, output it as html to the page -->
     <div><%= director.name %></div>
+    <a href="/directors/<%= director.id %>">Pregledaj</a>
+    <a href="/directors/<%= director.id %>/edit">Uredi</a>
+    <!-- method is post but it will be overriden by _method -->
+    <!-- that is why we used methodOverride and gave it argument _method in server.js -->
+    <!-- works like links above but is inside of a form so that we can use a delete method 
+    instead of get -->
+    <!-- broken down into a partial since it's going to be used everywhere -->
+    <!-- including that partial and just passing parameters -->
+    <%- include('../partials/deleteForm', {url: `/directors/${director.id}`}) %> 
+
+    <!-- <form method="POST" action="/directors/<%= director.id %>?_method=DELETE">
+        <button type="submit">Obriši</button>
+    </form> -->
 <% }) %> 
 

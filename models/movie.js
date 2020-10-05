@@ -37,11 +37,13 @@ const movieSchema = new mongoose.Schema({
         default: Date.now
     },
     // cover slika
+    // instead of storing coverImageName, we just want to store the coverImage itself
     coverImage: {
-        // buffer of the data representing our entire image
+        // buffer of the data representing our entire image, no longer string
         type: Buffer,
         required: true
     },
+    // for indetifying image type
     coverImageType:{
         type: String,
         required: true
@@ -79,15 +81,19 @@ const movieSchema = new mongoose.Schema({
     }
 }) */
 
+// image uploads, but doesn't show up
+// fix:
+// we need to convert coverImage and coverImageType to an actual usable source
 // instead of above old way, for filepond to work use:
 movieSchema.virtual('coverImagePath').get(function(){
     if(this.coverImage != null && this.coverImageType !=null){
+        // we want to return the source of our image object
         // returns proper string for our image source in order to display image from our buffer
+        // data object is a source for images allows us to take Buffer data and use it as source for images 
         return `data:${this.coverImageType};charset=utf-8;base64,${this.coverImage.toString('base64')}`
     }
 })
 
 // name of the table (schema)
 module.exports = mongoose.model('Movie', movieSchema)
-// now this can be imported inside of movies route
 /* module.exports.coverImageBasePath = coverImageBasePath */

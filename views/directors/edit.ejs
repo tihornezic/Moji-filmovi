@@ -1,0 +1,14 @@
+<h2>Uredi redatelja</h2>
+<!-- action is url where the form goes to -->
+<!-- to use post method, you can only use forms -->
+
+<!-- changing action to have the id of the director at the end -->
+<!-- this way we get our update action instead of our new action -->
+<!-- also we need to use methodOverride so it's a put method instead of post -->
+<form action="/directors/<%= director.id %>?_method=PUT" method="POST">
+    <%- include('_form_fields')%> 
+    <!-- anchor tags are used to link things  -->
+    <!-- buttons used to interact with forms or other objects  -->
+    <a href="/directors/<%= director.id %>">Odustani</a>
+    <button type="submit">Spremi</button>
+</form>

@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 // for multer - commented out since started using filepond
-// const multer = require('multer')
+/* const multer = require('multer') */
 // node.js built in path
 /* const path = require('path')
  */
@@ -22,15 +22,15 @@ const Director = require('../models/director')
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
 // 
 
-// const upload = multer({
-//     // where the upload is going to be
-//     // we don't want to hardcode it, but to come from movie model
-//     dest: uploadPath, // is basically 'public/uploads/movieCovers'
-//     // to filter which files server accepts
-//     fileFilter: (req, file, callback) => {
-//         callback(null, imageMimeTypes.includes(file.mimetype))
-//     }
-// })
+/* const upload = multer({
+    // where the upload is going to be
+    // we don't want to hardcode it, but to come from movie model
+    dest: uploadPath, // is basically 'public/uploads/movieCovers'
+    // to filter which files server accepts
+    fileFilter: (req, file, callback) => {
+        callback(null, imageMimeTypes.includes(file.mimetype))
+    }
+}) */
 
 
 // all movies route
@@ -91,7 +91,7 @@ router.get('/new', async (req, res) => {
 router.post('/', async (req, res) => {
     // this library is also going to add a variable to our request which is file
     // we're getting file name from the file if it exists and give it that name
-    // const fileName = req.file != null ? req.file.filename : null
+    /* const fileName = req.file != null ? req.file.filename : null */
     // new movie object
     const movie = new Movie({
         // setting default values ?OR? creating new movie object ??? 
@@ -105,7 +105,7 @@ router.post('/', async (req, res) => {
             // for that we're gonna use library multer (multi part forms)
                 // if we uploaded a file fileName is going to be equal to the name of that file
                 // but if not, it will be null, so we can send error msg
-        // coverImageName: fileName,
+        /* coverImageName: fileName, */
         description: req.body.description
         // entire movie object created, now saving it:
     })
@@ -156,9 +156,13 @@ async function renderNewPage(res, movie, hasError = false) {
 
 // stores files inside our db so we can use it inside heroku
 function saveCover(movie, coverEncoded){
+    // if coverEncoded is a valid variable, save it to movie.cover
+    // if it is null we want to return from this function and actually don't do anything
     if(coverEncoded == null) return
+    // parsing coverEncoded into a JSON
     const cover = JSON.parse(coverEncoded)
     if(cover != null && imageMimeTypes.includes(cover.type)){
+        // converting cover.data to a buffer
         // first parameter is our data and second is how we want to convert it
         movie.coverImage = new Buffer.from(cover.data, 'base64')
         movie.coverImageType = cover.type

@@ -10,4 +10,5 @@ FilePond.setOptions({
 })
 // from filepond github
 // parsing all our file input into filepond inputs
+// turns all file inputs in our page into filepond inputs
 FilePond.parse(document.body);
