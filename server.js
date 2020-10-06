@@ -11,6 +11,8 @@ const expressLayouts = require('express-ejs-layouts')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
+// app.locals.genres = require('./models/genres.json')
+
 // including/fetching routes
 // './' relative to where we are
 const indexRouter = require('./routes/index')

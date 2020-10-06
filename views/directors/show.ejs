@@ -3,7 +3,7 @@
 <%- include('../partials/deleteForm', {url: `/directors/${director.id}`}) %> 
 <!-- if we have movies from that director -->
 <% if(moviesByDirector.length > 0) { %> 
-    <h2>Filmovi redatelja <%= director.name %> </h2>
+    <h2>Filmovi redatelja</h2>
     <% moviesByDirector.forEach(movie => { %>
     <img height="150" width="100" src="<%= movie.coverImagePath %>">
     <% }) %>

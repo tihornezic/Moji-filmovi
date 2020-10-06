@@ -16,6 +16,13 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+
+    // žanr
+    genre: {
+        type: String,
+        required: true
+    },
+
     // komentar/opis
     description: {
         type: String
@@ -44,7 +51,7 @@ const movieSchema = new mongoose.Schema({
         required: true
     },
     // for indetifying image type
-    coverImageType:{
+    coverImageType: {
         type: String,
         required: true
     },
@@ -85,8 +92,8 @@ const movieSchema = new mongoose.Schema({
 // fix:
 // we need to convert coverImage and coverImageType to an actual usable source
 // instead of above old way, for filepond to work use:
-movieSchema.virtual('coverImagePath').get(function(){
-    if(this.coverImage != null && this.coverImageType !=null){
+movieSchema.virtual('coverImagePath').get(function () {
+    if (this.coverImage != null && this.coverImageType != null) {
         // we want to return the source of our image object
         // returns proper string for our image source in order to display image from our buffer
         // data object is a source for images allows us to take Buffer data and use it as source for images 

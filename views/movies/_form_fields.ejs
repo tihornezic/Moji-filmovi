@@ -2,7 +2,7 @@
     <!-- _ in file name means partial file, indicates it is not from server  -->
     <label>Naslov</label>
     <!-- = tells server to create whatever text you have inside, output it as html to the page -->
-        <!-- value represents the default value -->
+    <!-- value represents the default value -->
     <input type="text" name="title" value="<%= movie.title %>">
 </div>
 <div>
@@ -11,11 +11,13 @@
     <select name="director">
         <% directors.forEach(director => { %>
         <!-- if a user has already selected an author -->
-            <!-- movie.director is id in movie model -->
-            <!-- it selects the very first one by default -->
+        <!-- movie.director is id in movie model -->
+        <!-- it selects the very first one by default -->
         <% if(director.id === movie.director) { %>
+        <option selected disabled hidden></option>
         <option selected label="<%= director.name %>" value="<%= director.id %>"></option>
         <% } else { %>
+        <option selected disabled hidden></option>
         <option label="<%= director.name %>" value="<%= director.id %>"></option>
         <% } %>
         <% }) %>
@@ -28,6 +30,15 @@
     <input type="date" name="releaseYear" value="<%= movie.releaseYear == null ? '' : 
             // we only want date, and not time
             movie.releaseYear.toISOString().split('T')[0] %>"> <!-- 2019-09-10T12:23 -->
+</div>
+<div>
+    <label>Žanr</label>
+    <select name="genre">
+        <% movieGenres.forEach(genre => { %>
+            <option selected disabled hidden></option>
+            <option label="<%= genre %>" value="<%= genre %>"></option>
+        <% }) %>
+    </select>
 </div>
 <div>
     <label>Trajanje</label>

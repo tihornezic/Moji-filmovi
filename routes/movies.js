@@ -99,6 +99,7 @@ router.post('/', async (req, res) => {
         director: req.body.director,
         // converting string date into actual date using new Date
         releaseYear: new Date(req.body.releaseYear),
+        genre: req.body.genre,
         duration: parseInt(req.body.duration),
         // for cover image we first need to create cover image file on our file system
         // then get the name from that and then save that into movie object
@@ -119,7 +120,6 @@ router.post('/', async (req, res) => {
         // res.redirect(`movies/${newMovie.id}`)
         res.redirect(`movies`)
     } catch {
-    
         // passing existing movie object
         // hasError = true because we are in catch section which is for handling errors
         renderNewPage(res, movie, true)
@@ -140,11 +140,18 @@ router.post('/', async (req, res) => {
 
 async function renderNewPage(res, movie, hasError = false) {
     try {
+        let movieGenres = 
+        ["Akcijski", "Avanturistički", "Komedija",
+        "Kriminalistički", "SF", "Drama", "Horor",
+        "Triler", "Animirani", "Dokumentarni", "Ratni",
+        "Ostalo"
+        ]
         const directors = await Director.find({})
         // to dynamically create error message
         // parameters we're sending to the server
         const params = {
             directors: directors,
+            movieGenres,
             movie: movie
         }
         if (hasError) params.errorMessage = 'Error Creating Movie'
