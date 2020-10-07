@@ -1,0 +1,12 @@
+<h2><%= movie.title %></h2>
+<img width="100" heigh="150" src="<%= movie.coverImagePath %>">
+<div>Redatelj: <%= movie.director.name %></div>
+<div>Godina izlaska: <%= movie.releaseYear.toDateString().split(' ').splice(3)%></div>
+<div>Trajanje: <%= movie.duration %>'</div>
+<div>Žanr: <%= movie.genre %> </div>
+<div>Komentar: <%= movie.description %></div>
+
+<a href="/movies/<%= movie.id %>/edit">Uredi</a>
+<!-- ../ up one directory -->
+<%- include('../partials/deleteForm', {url: `/movies/${movie.id}`}) %> 
+<a href="/directors/<%= movie.director.id %>">Pregledaj Redatelja</a>

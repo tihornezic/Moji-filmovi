@@ -14,10 +14,8 @@
         <!-- movie.director is id in movie model -->
         <!-- it selects the very first one by default -->
         <% if(director.id === movie.director) { %>
-        <option selected disabled hidden></option>
         <option selected label="<%= director.name %>" value="<%= director.id %>"></option>
         <% } else { %>
-        <option selected disabled hidden></option>
         <option label="<%= director.name %>" value="<%= director.id %>"></option>
         <% } %>
         <% }) %>
@@ -35,7 +33,6 @@
     <label>Žanr</label>
     <select name="genre">
         <% movieGenres.forEach(genre => { %>
-            <option selected disabled hidden></option>
             <option label="<%= genre %>" value="<%= genre %>"></option>
         <% }) %>
     </select>
@@ -51,5 +48,5 @@
 </div>
 <div>
     <label>Komentar</label>
-    <textarea name="description"><%= movie.description %></textarea>
+    <textarea rows="4" cols="50" name="description"><%= movie.description %></textarea>
 </div>

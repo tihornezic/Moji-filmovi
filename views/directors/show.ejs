@@ -1,10 +1,13 @@
 <h2><%= director.name %> </h2>
 <a href="/directors/<%= director.id %>/edit">Uredi</a>
-<%- include('../partials/deleteForm', {url: `/directors/${director.id}`}) %> 
+<%- include('../partials/deleteForm', {url: `/directors/${director.id}`}) %>
 <!-- if we have movies from that director -->
-<% if(moviesByDirector.length > 0) { %> 
-    <h2>Filmovi redatelja</h2>
-    <% moviesByDirector.forEach(movie => { %>
+<% if(moviesByDirector.length > 0) { %>
+<h2>Filmovi redatelja</h2>
+<% moviesByDirector.forEach(movie => { %>
+<a href="/movies/<%= movie.id %>">
     <img height="150" width="100" src="<%= movie.coverImagePath %>">
-    <% }) %>
-<% } %> 
+</a>
+
+<% }) %>
+<% } %>

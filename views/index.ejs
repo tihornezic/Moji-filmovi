@@ -3,6 +3,7 @@
     <% movies.forEach(movie => { %>
         <!-- we need that direct path to where that cover image is uploaded -->
         <!-- movie model -->
-    <img height="150" width="100" src="<%= movie.coverImagePath %>">
+    <a href="/movies/<%= movie.id %>"><img height="150" width="100" src="<%= movie.coverImagePath %>"></a> 
+    
     <% }) %>
 </div>

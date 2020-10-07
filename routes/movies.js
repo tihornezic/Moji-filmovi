@@ -40,20 +40,20 @@ router.get('/', async (req, res) => {
     // and we want to build this query from our request query parameters
     let query = Movie.find()
     // query of a title
-    if(req.query.title != null && req.query.title != ''){
+    if (req.query.title != null && req.query.title != '') {
         // 'title' is db model parameter so esentially movie.title object of our db
         // regular expression contains title and ignors capital or loweracase
         query = query.regex('title', new RegExp(req.query.title, 'i'))
     }
     // filter for publishedBefore
-    if(req.query.publishedBefore != null && req.query.publishedBefore != ''){
+    if (req.query.publishedBefore != null && req.query.publishedBefore != '') {
         // .lte - less than or equal to
         // if the releaseYear <= publishedBefore
         // then we want to return that object
         query = query.lte('releaseYear', req.query.publishedBefore)
     }
     // filter for publishedAfter
-    if(req.query.publishedAfter != null && req.query.publishedAfter != ''){
+    if (req.query.publishedAfter != null && req.query.publishedAfter != '') {
         // .gte - greater than or equal to
         // if the releaseYear >= publishedBefore
         // then we want to return that object
@@ -85,9 +85,9 @@ router.get('/new', async (req, res) => {
 // we're telling molter we are uploading a single file with the name of cover
 // it's going to do all work behind the scenes for us to create that file and
 // upload it to the server and put it the correct folder
-    // '/' is the meaning of the route at which you are listening for the request
-    // deleted since using filepond , upload.single('cover')
-    // and uninstalling multer
+// '/' is the meaning of the route at which you are listening for the request
+// deleted since using filepond , upload.single('cover')
+// and uninstalling multer
 router.post('/', async (req, res) => {
     // this library is also going to add a variable to our request which is file
     // we're getting file name from the file if it exists and give it that name
@@ -103,9 +103,9 @@ router.post('/', async (req, res) => {
         duration: parseInt(req.body.duration),
         // for cover image we first need to create cover image file on our file system
         // then get the name from that and then save that into movie object
-            // for that we're gonna use library multer (multi part forms)
-                // if we uploaded a file fileName is going to be equal to the name of that file
-                // but if not, it will be null, so we can send error msg
+        // for that we're gonna use library multer (multi part forms)
+        // if we uploaded a file fileName is going to be equal to the name of that file
+        // but if not, it will be null, so we can send error msg
         /* coverImageName: fileName, */
         description: req.body.description
         // entire movie object created, now saving it:
@@ -117,8 +117,8 @@ router.post('/', async (req, res) => {
     // saving a movie
     try {
         const newMovie = await movie.save()
-        // res.redirect(`movies/${newMovie.id}`)
-        res.redirect(`movies`)
+        res.redirect(`movies/${newMovie.id}`)
+        // res.redirect(`movies`)
     } catch {
         // passing existing movie object
         // hasError = true because we are in catch section which is for handling errors
@@ -138,14 +138,102 @@ router.post('/', async (req, res) => {
     })
 } */
 
-async function renderNewPage(res, movie, hasError = false) {
+// show movie route
+router.get('/:id', async (req, res) => {
     try {
-        let movieGenres = 
-        ["Akcijski", "Avanturistički", "Komedija",
-        "Kriminalistički", "SF", "Drama", "Horor",
-        "Triler", "Animirani", "Dokumentarni", "Ratni",
-        "Ostalo"
-        ]
+        // using .populate so director does not display as id but his actual name
+        // so it will populate the movie variable inside movie object
+        // with all of the director information (in this case name)
+        // populate preloads all the director information before it actually returns the movie
+        const movie = await Movie.findById(req.params.id).populate('director').exec()
+        res.render('movies/show', {
+            movie: movie
+        })
+    } catch (err) {
+        console.log(err)
+        res.redirect('/')
+    }
+})
+
+// edit movie route
+router.get('/:id/edit', async (req, res) => {
+    try {
+        const movie = await Movie.findById(req.params.id)
+        renderEditPage(res, movie)
+    }catch{
+        res.redirect('/')
+    }
+    
+})
+
+// update movie route
+router.put('/:id', async (req, res) => {
+    let movie
+    try {
+        movie = await Movie.findById(req.params.id) 
+        movie.title = req.body.title
+        // req.body.director because we set the <select name = "director"> in _form_fiuels.ejs
+        movie.director = req.body.director
+        movie.releaseYear = new Date(req.body.releaseYear)
+        movie.genre = req.body.genre
+        movie.duration = parseInt(req.body.duration)
+        movie.description = req.body.description
+        // if cover exists
+        // we don't want to delete the cover that user already uploaded
+        if(req.body.cover != null && req.body.cover !== ''){
+            saveCover(movie, req.body.cover)
+        }
+        await movie.save()
+        res.redirect(`/movies/${movie.id}`)
+    } catch {
+        
+        // if we successfully got the movie but had problem saving the movie
+        if(movie != null){
+            renderEditPage(res, movie, true)
+        // if we couldn't get the movie
+        }else{
+            res.redirect('/')
+        }
+    }
+})
+
+// delete movie page
+router.delete('/:id', async (req, res) => {
+    let movie
+    try{
+        movie = await Movie.findById(req.params.id)
+        await movie.remove()
+        res.redirect('/movies')
+    }catch{
+        // if we have a movie
+        if(movie != null){
+            res.render('movies/show', {
+                movie: movie,
+                errorMessage: 'Neuspješno uklanjanje filma!'
+            })
+        }else{
+            res.redirect('/')
+        }
+    }
+})
+
+async function renderNewPage(res, movie, hasError = false) {
+    renderFormPage(res, movie, 'new', hasError)
+}
+
+async function renderEditPage(res, movie, hasError = false) {
+    renderFormPage(res, movie, 'edit', hasError)
+}
+
+// shared function for the 2 above so we don't have to duplicate this code
+async function renderFormPage(res, movie, form, hasError = false) {
+    try {
+        let movieGenres =
+            ["Akcijski", "Avanturistički", "Komedija",
+                "Kriminalistički", "SF", "Drama", "Horor",
+                "Triler", "Animirani", "Dokumentarni", "Ratni",
+                "Ostalo"
+            ]
         const directors = await Director.find({})
         // to dynamically create error message
         // parameters we're sending to the server
@@ -154,21 +242,29 @@ async function renderNewPage(res, movie, hasError = false) {
             movieGenres,
             movie: movie
         }
-        if (hasError) params.errorMessage = 'Error Creating Movie'
-        res.render('movies/new', params)
+        if(hasError){
+            // if we are on the edit form
+            if(form == 'edit'){
+                params.errorMessage = 'Error Updating Movie'
+            }else{
+                params.errorMessage = 'Error Creating Movie'
+            }
+        }
+        // to dynamically render form
+        res.render(`movies/${form}`, params)
     } catch {
         res.redirect('/movies')
     }
 }
 
 // stores files inside our db so we can use it inside heroku
-function saveCover(movie, coverEncoded){
+function saveCover(movie, coverEncoded) {
     // if coverEncoded is a valid variable, save it to movie.cover
     // if it is null we want to return from this function and actually don't do anything
-    if(coverEncoded == null) return
+    if (coverEncoded == null) return
     // parsing coverEncoded into a JSON
     const cover = JSON.parse(coverEncoded)
-    if(cover != null && imageMimeTypes.includes(cover.type)){
+    if (cover != null && imageMimeTypes.includes(cover.type)) {
         // converting cover.data to a buffer
         // first parameter is our data and second is how we want to convert it
         movie.coverImage = new Buffer.from(cover.data, 'base64')

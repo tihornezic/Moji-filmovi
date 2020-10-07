@@ -102,7 +102,7 @@ router.get('/:id/edit', async (req, res) => {
 
 })
 
-// from a browser, you can only mage get and post requests
+// from a browser, you can only make get and post requests
 // to use put and delete, we need to install library method-override:
 // npm i method-override
 // what it does: allows us to take a post form, send it to our server
