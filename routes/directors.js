@@ -44,7 +44,8 @@ router.get('/new', (req, res) => {
 // create director route
 router.post('/', async (req, res) => {
     const director = new Director({
-        name: req.body.name
+        name: req.body.name,
+        description: req.body.description
     })
     try {
         const newDirector = await director.save()
@@ -78,7 +79,7 @@ router.get('/:id', async (req, res) => {
     /* res.send('Show Director ' + req.params.id) */
     try{
         const director = await Director.findById(req.params.id)
-        const movies = await Movie.find({director: director.id}).limit(6).exec()
+        const movies = await Movie.find({director: director.id}).limit(15).exec()
         res.render('directors/show', {
             director: director,
             moviesByDirector: movies
@@ -95,7 +96,9 @@ router.get('/:id/edit', async (req, res) => {
         // finds director by id it it exists
         const director = await Director.findById(req.params.id)
         // instead of rendering new, getting director from the db
-        res.render('directors/edit', { director: director })
+        res.render('directors/edit', { 
+            director: director 
+        })
     } catch {
         res.redirect('/directors')
     }
@@ -122,6 +125,7 @@ router.put('/:id', async (req, res) => {
         director = await Director.findById(req.params.id) // passing id that we got from parameters
         // changed to new name before saving it
         director.name = req.body.name
+        director.description = req.body.description
         // saving director
         await director.save()
         res.redirect(`/directors/${director.id}`)

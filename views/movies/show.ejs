@@ -1,12 +1,25 @@
 <h2><%= movie.title %></h2>
-<img width="100" heigh="150" src="<%= movie.coverImagePath %>">
+<img width="200" heigh="300" src="<%= movie.coverImagePath %>">
+<br>
+<br>
 <div>Redatelj: <%= movie.director.name %></div>
 <div>Godina izlaska: <%= movie.releaseYear.toDateString().split(' ').splice(3)%></div>
 <div>Trajanje: <%= movie.duration %>'</div>
 <div>Žanr: <%= movie.genre %> </div>
+<div>Uloge:
+
+    <% if(actorsOnMovie.actor.length > 0) { %>
+        <% actorsOnMovie.actor.forEach(actor => { %>
+            <a href="/actors/<%= actor.id %>"><%= actor.name %></a>
+        <% }) %>
+    <% } else { %>
+        <span>-</span>
+    <% } %>
+</div>
+<div>Ocjena: <%= movie.rating %> </div>
 <div>Komentar: <%= movie.description %></div>
 
 <a href="/movies/<%= movie.id %>/edit">Uredi</a>
 <!-- ../ up one directory -->
-<%- include('../partials/deleteForm', {url: `/movies/${movie.id}`}) %> 
+<%- include('../partials/deleteForm', {url: `/movies/${movie.id}`}) %>
 <a href="/directors/<%= movie.director.id %>">Pregledaj Redatelja</a>

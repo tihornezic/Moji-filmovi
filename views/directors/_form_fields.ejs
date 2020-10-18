@@ -1,5 +1,10 @@
 <!-- _ in file name means partial file, indicates it is not from server  -->
-<label>Puno Ime</label>
-<!-- = tells server to create whatever text you have inside, output it as html to the page -->
-<input type="text" name="name" value="<%= director.name %>">
- 
+<div>
+    <label>Ime i Prezime</label>
+    <!-- = tells server to create whatever text you have inside, output it as html to the page -->
+    <input type="text" name="name" value="<%= director.name %>">
+</div>
+<div>
+    <label>Opis</label>
+    <textarea rows="4" cols="50" name="description"><%= director.description %></textarea>
+</div>

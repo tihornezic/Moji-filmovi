@@ -1,4 +1,6 @@
 <h2><%= director.name %> </h2>
+<div>Opis: <%= director.description %></div>
+<br><br>
 <a href="/directors/<%= director.id %>/edit">Uredi</a>
 <%- include('../partials/deleteForm', {url: `/directors/${director.id}`}) %>
 <!-- if we have movies from that director -->
@@ -8,6 +10,5 @@
 <a href="/movies/<%= movie.id %>">
     <img height="150" width="100" src="<%= movie.coverImagePath %>">
 </a>
-
 <% }) %>
 <% } %>

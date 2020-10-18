@@ -1,0 +1,17 @@
+<h2>Pretraži glumce</h2>
+
+<form action="/actors" method="GET">
+    <label">Ime</label>
+    <input type="text" name="name" value="<%= searchOptions.name %> ">
+    <button type="submit">Traži</button>
+</form>
+
+<br>
+<br>
+
+<div>
+    <% actors.forEach(actor => { %>
+    <a href="/actors/<%= actor.id %> "><img height="150" width="100" 
+        src="<%= actor.coverImagePath %>"></a></a>
+    <% }) %>
+</div>

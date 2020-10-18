@@ -1,0 +1,17 @@
+<h2><%= actor.name %> </h2>
+<img width="200" heigh="300" src="<%= actor.coverImagePath %>">
+<div>Pojavljivanja:
+
+    <% if(movie.length > 0) { %> 
+    <% movie.forEach(movie => { %>
+        <a href="/movies/<%= movie.id %>"><%= movie.title %></a>
+    <% }) %>
+    <% } else { %> 
+        <label>-</label>
+    <% } %> 
+
+</div>
+<div>Komentar: <%= actor.description %></div>
+
+<a href="/actors/<%= actor.id %>/edit">Uredi</a>
+<%- include('../partials/deleteForm', {url: `/actors/${actor.id}`}) %>

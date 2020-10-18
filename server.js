@@ -11,6 +11,8 @@ const expressLayouts = require('express-ejs-layouts')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
+
+
 // app.locals.genres = require('./models/genres.json')
 
 // including/fetching routes
@@ -18,6 +20,8 @@ const methodOverride = require('method-override')
 const indexRouter = require('./routes/index')
 const directorRouter = require('./routes/directors')
 const movieRouter = require('./routes/movies')
+const actorRouter = require('./routes/actors')
+const topRouter = require('./routes/top')
 
 app.set('view engine', 'ejs')
 // all of the different views of our files are gonna go for server
@@ -47,5 +51,7 @@ app.use('/', indexRouter)
 // same applies to other routes
 app.use('/directors', directorRouter)
 app.use('/movies', movieRouter)
+app.use('/actors', actorRouter)
+app.use('/top', topRouter)
 
 app.listen(process.env.PORT || 3000)

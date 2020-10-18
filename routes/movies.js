@@ -14,6 +14,9 @@ const router = express.Router()
 
 const Movie = require('../models/movie')
 const Director = require('../models/director')
+const Actor = require('../models/actor')
+
+
 
 // uploadPath is going to go from public folder into coverImageBasePath
 /* const uploadPath = path.join('public', Movie.coverImageBasePath) */
@@ -97,6 +100,7 @@ router.post('/', async (req, res) => {
         // setting default values ?OR? creating new movie object ??? 
         title: req.body.title,
         director: req.body.director,
+        actor: req.body.actor,
         // converting string date into actual date using new Date
         releaseYear: new Date(req.body.releaseYear),
         genre: req.body.genre,
@@ -107,19 +111,20 @@ router.post('/', async (req, res) => {
         // if we uploaded a file fileName is going to be equal to the name of that file
         // but if not, it will be null, so we can send error msg
         /* coverImageName: fileName, */
-        description: req.body.description
+        description: req.body.description,
+        rating: req.body.rating
         // entire movie object created, now saving it:
     })
     // uploading a movie file into our actual movie model
     // saving cover image
-    saveCover(movie, req.body.cover)
 
     // saving a movie
     try {
+        saveCover(movie, req.body.cover)
         const newMovie = await movie.save()
         res.redirect(`movies/${newMovie.id}`)
         // res.redirect(`movies`)
-    } catch {
+    } catch  {
         // passing existing movie object
         // hasError = true because we are in catch section which is for handling errors
         renderNewPage(res, movie, true)
@@ -146,8 +151,11 @@ router.get('/:id', async (req, res) => {
         // with all of the director information (in this case name)
         // populate preloads all the director information before it actually returns the movie
         const movie = await Movie.findById(req.params.id).populate('director').exec()
+        const actorsOnMovie = await Movie.findById(req.params.id).populate('actor').exec()
         res.render('movies/show', {
-            movie: movie
+            movie: movie,
+            // actors: actors
+            actorsOnMovie: actorsOnMovie
         })
     } catch (err) {
         console.log(err)
@@ -174,10 +182,12 @@ router.put('/:id', async (req, res) => {
         movie.title = req.body.title
         // req.body.director because we set the <select name = "director"> in _form_fiuels.ejs
         movie.director = req.body.director
+        movie.actor = req.body.actor
         movie.releaseYear = new Date(req.body.releaseYear)
         movie.genre = req.body.genre
         movie.duration = parseInt(req.body.duration)
         movie.description = req.body.description
+        movie.rating = req.body.rating
         // if cover exists
         // we don't want to delete the cover that user already uploaded
         if(req.body.cover != null && req.body.cover !== ''){
@@ -235,12 +245,14 @@ async function renderFormPage(res, movie, form, hasError = false) {
                 "Ostalo"
             ]
         const directors = await Director.find({})
+        const actors = await Actor.find({})
         // to dynamically create error message
         // parameters we're sending to the server
         const params = {
             directors: directors,
             movieGenres,
-            movie: movie
+            movie: movie,
+            actors: actors
         }
         if(hasError){
             // if we are on the edit form

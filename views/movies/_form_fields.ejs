@@ -22,6 +22,18 @@
     </select>
 </div>
 <div>
+    <label>Glumci u filmu:</label>
+    <select name="actor" multiple>
+        <% actors.forEach(actor => { %>
+        <% if(actor.id === movie.actor) { %>
+        <option selected label="<%= actor.name %>" value="<%= actor.id %>"></option>
+        <% } else { %>
+        <option label="<%= actor.name %>" value="<%= actor.id %>"></option>
+        <% } %>
+        <% }) %>
+    </select>
+</div>
+<div>
     <label>Godina izlaska</label>
     <!-- value of movie.releaseYear is not in the correct form of type ="date" -->
     <!-- so we need to convert it to the correct notation -->
@@ -33,13 +45,17 @@
     <label>Žanr</label>
     <select name="genre">
         <% movieGenres.forEach(genre => { %>
-            <option label="<%= genre %>" value="<%= genre %>"></option>
+        <option label="<%= genre %>" value="<%= genre %>"></option>
         <% }) %>
     </select>
 </div>
 <div>
     <label>Trajanje</label>
     <input type="number" name="duration" min="1" value="<%= movie.duration %>">
+</div>
+<div>
+    <label>Ocjena</label>
+    <input type="number" name="rating" min="1" max="10" value="<%= movie.rating %>" step=".1">
 </div>
 <div>
     <label>Naslovna slika</label>

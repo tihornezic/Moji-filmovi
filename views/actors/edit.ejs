@@ -1,0 +1,9 @@
+<h2>Uredi Glumca</h2>
+
+<form action="/actors/<%= actor.id %>?_method=PUT" method="POST">
+    <%- include('_form_fields')%> 
+    <!-- anchor tags are used to link things  -->
+    <!-- buttons used to interact with forms or other objects  -->
+    <a href="/actors">Odustani</a>
+    <button type="submit">Spremi</button>
+</form>

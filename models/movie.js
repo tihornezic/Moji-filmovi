@@ -66,6 +66,19 @@ const movieSchema = new mongoose.Schema({
         // since we're referencing something else (ObjectId), we need to tell mongoose what
         // we're referencing
         ref: 'Director'
+    },
+
+    actor: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'Actor'
+        }
+    ],
+
+    rating: {
+        type: Number,
+        required: true
     }
 })
 
