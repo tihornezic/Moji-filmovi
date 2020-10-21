@@ -3,19 +3,20 @@ reason to use partials is because it allows you to break out
 your ejs into smaller files, and it allows you to import these files
 multiple times in another files so no duplication needed -->
 <header>
-    <nav>
-        <a href="/">Moji najdraži filmovi</a>
+    <nav class="header-nav">
+        <a class="header-title" href="/">Moji najdraži filmovi</a>
         <ul>
             <!-- /directors corresponds to the server.js file where we -->
             <!-- declared the app.use('/directors', directorRouter) line -->
             <!-- bottom line, it corresponds to the route set in main server.js file! -->
             <li><a href="/directors">Redatelji</a></li>
-            <li><a href="/directors/new">Dodaj Redatelja</a></li> 
+            <li><a href="/directors/new">Dodaj Redatelja</a></li>
             <li><a href="/movies">Filmovi</a></li>
             <li><a href="/movies/new">Dodaj Film</a></li>
             <li><a href="/actors">Glumci</a></li>
             <li><a href="/actors/new">Dodaj Glumca</a></li>
             <li><a href="/top">Moji Top Filmovi</a></li>
+            <hr class="line">
         </ul>
     </nav>
 </header>

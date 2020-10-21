@@ -1,0 +1,92 @@
+:root {
+    --form-label-font-size: .9rem;
+    --form-input-background-color: #3c3f42;
+    --form-input-border-color: #5c6064;
+    --form-input-border-color-light: rgb(125, 129, 134);
+}
+
+.form-row {
+    display: flex;
+    margin-bottom: .5rem;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2rem;
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.form-item:first-child {
+    margin-left: 0;
+}
+
+.form-item-no-grow {
+    flex-grow: 0;
+}
+
+.form-row-end {
+    margin-top: 1rem;
+    justify-content: flex-end;
+}
+
+/* selecting labels inside of form-item */
+.form-item > label {
+    font-size: var(--form-label-font-size);
+    padding-bottom: .3rem;
+    /* margin-left: .25rem; */
+}
+
+.form-item input, .form-item select, .form-item textarea {
+    /* height: 2rem; */
+    padding: .1rem .2rem;
+    border-radius: .25rem;
+    border: 1px solid var(--form-input-border-color);
+    background-color: var(--form-input-background-color);
+    color: white;
+    font-weight: normal;
+    font-family: 'Ubuntu';
+    font-size: .8rem;
+    outline: none;
+ }
+
+ .form-item textarea {
+     height: 100%;
+     resize: none;
+ }
+
+ .form-item input, .form-item select {
+     height: 2rem;
+ }
+
+ .form-item .sel-act {
+     height: 5rem;
+ }
+
+ .form-item input:focus, .form-item select:focus, .form-item textarea:focus {
+     border-color: var(--form-input-border-color-light)
+ }
+
+
+ .filepond--root {
+     font-family: 'Ubuntu';
+     margin-bottom: 0;
+ }
+
+ .filepond--panel-root {
+     background-color: var(--form-input-background-color);
+     border: 1px solid var(--form-input-border-color);
+ }
+
+ .filepond--drop-label {
+     color: #bbbdc0;
+     font-size: inherit;
+ }
+
+ .filepond--root *:not(text) {
+    font-size: .8rem;
+    text-align: center;
+}
+
+

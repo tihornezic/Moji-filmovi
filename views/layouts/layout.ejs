@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,8 @@
     <!-- 4. image prefiew -->
     <!-- 5. image resize -->
     <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
-    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet">
     <!-- defer = to load and run after the entire body is done rendering  -->
     <script defer src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
     <script defer src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
@@ -19,13 +21,27 @@
     <!--  -->
     <!-- including our own script tag to set up filepond library -->
     <script defer src="/javascripts/fileUpload.js"></script>
+    <link rel="stylesheet" href="/stylesheets/shared/fonts.css">
+    <link rel="stylesheet" href="/stylesheets/shared/variables.css">
+    <link rel="stylesheet" href="/stylesheets/shared/header.css">
+    <link rel="stylesheet" href="/stylesheets/shared/buttons.css">
+    <link rel="stylesheet" href="/stylesheets/shared/form.css">
+    <link rel="stylesheet" href="/stylesheets/shared/top.css">
+    <link rel="stylesheet" href="/stylesheets/shared/director.css">
+    <link rel="stylesheet" href="/stylesheets/shared/movies.css">
+    <link rel="stylesheet" href="/stylesheets/shared/actors.css">
+    <link rel="stylesheet" href="/stylesheets/main.css">
     <title>Moji filmovi</title>
 </head>
+
 <body>
-    <br>
-    <%- include('../partials/header.ejs') %> 
-    <%- include('../partials/errorMessage.ejs') %> 
-    <%- body %> 
-    <br>
+    <div class="top-nav">
+        <%- include('../partials/header.ejs') %>
+    </div>
+    <div class="inner-container">
+        <%- include('../partials/errorMessage.ejs') %>
+        <%- body %>
+    </div>
 </body>
+
 </html>

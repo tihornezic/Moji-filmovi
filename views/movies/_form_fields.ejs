@@ -1,68 +1,73 @@
-<div>
-    <!-- _ in file name means partial file, indicates it is not from server  -->
-    <label>Naslov</label>
-    <!-- = tells server to create whatever text you have inside, output it as html to the page -->
-    <!-- value represents the default value -->
-    <input type="text" name="title" value="<%= movie.title %>">
+<div class="form-row">
+    <div class="form-item">
+        <label>Naslov</label>
+        <input type="text" name="title" value="<%= movie.title %>">
+    </div>
+    <div class="form-item">
+        <label>Redatelj</label>
+        <!-- directors dropdown -->
+        <select name="director">
+            <% directors.forEach(director => { %>
+            <!-- if a user has already selected an author -->
+            <!-- movie.director is id in movie model -->
+            <!-- it selects the very first one by default -->
+            <% if(director.id === movie.director) { %>
+            <option selected label="<%= director.name %>" value="<%= director.id %>"></option>
+            <% } else { %>
+            <option label="<%= director.name %>" value="<%= director.id %>"></option>
+            <% } %>
+            <% }) %>
+        </select>
+    </div>
 </div>
-<div>
-    <label>Redatelj</label>
-    <!-- directors dropdown -->
-    <select name="director">
-        <% directors.forEach(director => { %>
-        <!-- if a user has already selected an author -->
-        <!-- movie.director is id in movie model -->
-        <!-- it selects the very first one by default -->
-        <% if(director.id === movie.director) { %>
-        <option selected label="<%= director.name %>" value="<%= director.id %>"></option>
-        <% } else { %>
-        <option label="<%= director.name %>" value="<%= director.id %>"></option>
-        <% } %>
-        <% }) %>
-    </select>
-</div>
-<div>
-    <label>Glumci u filmu:</label>
-    <select name="actor" multiple>
-        <% actors.forEach(actor => { %>
-        <% if(actor.id === movie.actor) { %>
-        <option selected label="<%= actor.name %>" value="<%= actor.id %>"></option>
-        <% } else { %>
-        <option label="<%= actor.name %>" value="<%= actor.id %>"></option>
-        <% } %>
-        <% }) %>
-    </select>
-</div>
-<div>
-    <label>Godina izlaska</label>
-    <!-- value of movie.releaseYear is not in the correct form of type ="date" -->
-    <!-- so we need to convert it to the correct notation -->
-    <input type="date" name="releaseYear" value="<%= movie.releaseYear == null ? '' : 
+<div class="form-row">
+    <div class="form-item">
+        <label>Glumci u filmu</label>
+        <select class="sel-act" name="actor" multiple>
+            <% actors.forEach(actor => { %>
+            <% if(actor.id === movie.actor) { %>
+            <option selected label="<%= actor.name %>" value="<%= actor.id %>"></option>
+            <% } else { %>
+            <option label="<%= actor.name %>" value="<%= actor.id %>"></option>
+            <% } %>
+            <% }) %>
+        </select>
+    </div>
+    <div class="form-item">
+        <label>Godina izlaska</label>
+        <!-- value of movie.releaseYear is not in the correct form of type ="date" -->
+        <!-- so we need to convert it to the correct notation -->
+        <input type="date" name="releaseYear" value="<%= movie.releaseYear == null ? '' : 
             // we only want date, and not time
             movie.releaseYear.toISOString().split('T')[0] %>"> <!-- 2019-09-10T12:23 -->
+    </div>
 </div>
-<div>
-    <label>Žanr</label>
-    <select name="genre">
-        <% movieGenres.forEach(genre => { %>
-        <option label="<%= genre %>" value="<%= genre %>"></option>
-        <% }) %>
-    </select>
+<div class="form-row">
+    <div class="form-item">
+        <label>Žanr</label>
+        <select name="genre">
+            <% movieGenres.forEach(genre => { %>
+            <option label="<%= genre %>" value="<%= genre %>"></option>
+            <% }) %>
+        </select>
+    </div>
+    <div class="form-item">
+        <label>Trajanje</label>
+        <input type="number" name="duration" min="1" value="<%= movie.duration %>">
+    </div>
+    <div class="form-item">
+        <label>Ocjena</label>
+        <input type="number" name="rating" min="1" max="10" value="<%= movie.rating %>" step=".1">
+    </div>
 </div>
-<div>
-    <label>Trajanje</label>
-    <input type="number" name="duration" min="1" value="<%= movie.duration %>">
-</div>
-<div>
-    <label>Ocjena</label>
-    <input type="number" name="rating" min="1" max="10" value="<%= movie.rating %>" step=".1">
-</div>
-<div>
-    <label>Naslovna slika</label>
-    <!-- transforming this input into a filepond -->
-    <input type="file" name="cover" class="filepond">
-</div>
-<div>
-    <label>Komentar</label>
-    <textarea rows="4" cols="50" name="description"><%= movie.description %></textarea>
+<div class="form-row">
+    <div class="form-item form-item-no-grow">
+        <label>Naslovna slika</label>
+        <!-- transforming this input into a filepond -->
+        <input type="file" name="cover" class="cover-size filepond">
+    </div>
+    <div class="form-item">
+        <label>Komentar</label>
+        <textarea rows="4" cols="50" name="description"><%= movie.description %></textarea>
+    </div>
 </div>

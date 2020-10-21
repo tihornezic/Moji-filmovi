@@ -1,0 +1,47 @@
+/* @import 'shared/fonts.css';
+@import 'shared/variables.css';
+@import 'shared/header.css'; */
+
+:root {
+    font-family: 'Ubuntu';
+    font-size: 20px;
+    color: var(--color-text-light);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    margin: auto;
+    padding: 0;
+    background: #191c1f
+}
+
+h2 {
+    color: #e0e5eb;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.page-header {
+    font-size: 1.5rem;
+}
+
+.inner-container {
+    padding-top: 5rem;
+    margin: 0 20rem;
+    /* background: #264768 */
+}
+
+.error-message {
+    color: #be3640;
+}
+
+a {
+    color: #ff424f;
+    font-size: .95rem;
+
+}

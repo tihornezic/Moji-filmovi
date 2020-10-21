@@ -1,0 +1,62 @@
+:root {
+    --color-btn-primary-text: #e0e5eb;
+    --color-btn-primary-text-dark: #bbbdc0;
+    --color-btn-primary-background: #ff424f;
+    --color-btn-primary-background-dark: #be3640;
+    
+    --color-btn-danger-text: #3f4347;
+    --color-btn-danger-text-dark: #333538;
+    --color-btn-danger-background: #e0e5eb;    
+    --color-btn-danger-background-dark: #a5a9ac;   
+}
+
+.btn {
+    border: 1px solid none;
+    border-radius: .5rem;
+    padding: .4rem 1.5rem;
+    font-size: .8rem;
+    font-family: 'Ubuntu';
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center
+}
+
+.btn-row {
+    display: flex;
+    align-items: flex-start;
+}
+
+/* every child of .btn-row */
+.btn-row > * {
+    margin-left: 1rem;
+    margin-top: .2rem;
+    margin-bottom: 1rem;
+}
+
+.btn-row > *:first-child {
+    margin-left: 0;
+}
+
+.btn-primary {
+    border: none;
+    color: var(--color-btn-primary-text);
+    background-color: var(--color-btn-primary-background);
+}
+
+.btn-primary:hover {
+    color: var(--color-btn-primary-text-dark);
+    background-color: var(--color-btn-primary-background-dark);
+}
+
+.btn-danger {
+    border: none;
+    color: var(--color-btn-danger-text);
+    background-color: var(--color-btn-danger-background);
+}
+
+.btn-danger:hover {
+    /* border: none; */
+    color: var(--color-btn-danger-text-dark);
+    background-color: var( --color-btn-danger-background-dark);
+}
+

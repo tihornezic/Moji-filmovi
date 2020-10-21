@@ -1,8 +1,34 @@
 <h2>Nedavno dodani filmovi</h2>
 
-<div><% movies.forEach(movie => { %>
-    <a href="/movies/<%= movie.id %>"><img height="150" width="100" src="<%= movie.coverImagePath %>"></a>
+<form action="/" method="GET">
+    <div class="form-row">
+        <div class="form-item">
+            <label>Naslov</label>
+            <input type="text" name="title" value="<%= searchOptions.title %>">
+        </div>
+    </div>
+    <div class="form-row form-row-end">
+        <button class="btn btn-primary" type="submit">Traži</button>
+    </div>
+</form>
+<br>
+
+<div class="movie-grid"><% movies.forEach(movie => { %>
+    <a href="/movies/<%= movie.id %>"><img height="225" width="150" src="<%= movie.coverImagePath %>"></a>
     <% }) %>
 </div>
-
-
+<div class="movie-grid">
+    <% movies.forEach(movie => { %>
+    <label class="movie-grid-info-title"><%= movie.title %> </label>
+    <% }) %>
+</div>
+<div class="movie-grid">
+    <% movies.forEach(movie => { %>
+    <label class="movie-grid-info-genre"><%= movie.genre %> </label>
+    <% }) %>
+</div>
+<div class="movie-grid">
+    <% movies.forEach(movie => { %>
+    <label class="movie-grid-info-rating"><%= movie.rating %> </label>
+    <% }) %>
+</div>

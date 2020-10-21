@@ -2,28 +2,44 @@
 
 <!-- action is url where the form goes to -->
 <form action="/movies" method="GET">
-    <div>
-        <label>Naslov</label>
-        <input type="text" name="title" value="<%= searchOptions.title %>">
+    <div class="form-row">
+        <div class="form-item">
+            <label>Naslov</label>
+            <input type="text" name="title" value="<%= searchOptions.title %>">
+        </div>
     </div>
-    <div>
-        <label>Izlazak nakon</label>
-        <input type="date" name="publishedAfter" value="<%= searchOptions.publishedAfter %>">
+    <div class="form-row">
+        <div class="form-item">
+            <label>Izlazak nakon</label>
+            <input type="date" name="publishedAfter" value="<%= searchOptions.publishedAfter %>">
+        </div>
+        <div class="form-item">
+            <label>Izlazak prije</label>
+            <input type="date" name="publishedBefore" value="<%= searchOptions.publishedBefore %>">
+        </div>
     </div>
-    <div>
-        <label>Izlazak prije</label>
-        <input type="date" name="publishedBefore" value="<%= searchOptions.publishedBefore %>">
+    <div class="form-row form-row-end">
+        <button class="btn btn-primary" type="submit">Traži</button>
     </div>
-    <button type="submit">Traži</button>
 </form>
 <br>
-<br>
-    
 <!-- display all movies -->
-<div>
+<div class="movie-grid"><% movies.forEach(movie => { %>
+    <a href="/movies/<%= movie.id %>"><img height="225" width="150" src="<%= movie.coverImagePath %>"></a>
+    <% }) %>
+</div>
+<div class="movie-grid">
     <% movies.forEach(movie => { %>
-        <!-- we need that direct path to where that cover image is uploaded -->
-        <!-- so we need to create variable of coverImagePath inside movie model --> 
-    <a href="/movies/<%= movie.id %>"><img height="150" width="100" src="<%= movie.coverImagePath %>"></a>
+    <label class="movie-grid-info-title"><%= movie.title %> </label>
+    <% }) %>
+</div>
+<div class="movie-grid">
+    <% movies.forEach(movie => { %>
+    <label class="movie-grid-info-genre"><%= movie.genre %> </label>
+    <% }) %>
+</div>
+<div class="movie-grid">
+    <% movies.forEach(movie => { %>
+    <label class="movie-grid-info-rating"><%= movie.rating %> </label>
     <% }) %>
 </div>

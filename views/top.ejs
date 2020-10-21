@@ -1,9 +1,22 @@
-<h2>Top Lista Filmova</h2>
-
-<div>
+<h2>Moja Top Lista Filmova</h2>
+<br>
+<div class="movie-grid">
     <% moviesByRating.forEach(movie => { %>
-    <a href="/movies/<%= movie.id %>"><img height="150" width="100" src="<%= movie.coverImagePath %>"></a>
-    <span><%= movie.rating %></span>
+    <a href="/movies/<%= movie.id %>"><img height="225" width="150" src="<%= movie.coverImagePath %>"></a>
     <% }) %>
 </div>
-
+<div class="movie-grid">
+    <% moviesByRating.forEach(movie => { %>
+    <label class="movie-grid-info-title"><%= movie.title %> </label>
+    <% }) %>
+</div>
+<div class="movie-grid">
+    <% moviesByRating.forEach(movie => { %>
+    <label class="movie-grid-info-genre"><%= movie.genre %> </label>
+    <% }) %>
+</div>
+<div class="movie-grid">
+    <% moviesByRating.forEach(movie => { %>
+    <label class="movie-grid-info-rating"><%= movie.rating %> </label>
+    <% }) %>
+</div>

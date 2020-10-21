@@ -1,0 +1,36 @@
+.actor-details {
+    display: flex;
+}
+
+.actor-details-label {
+    font-size: .95rem;
+    font-weight: 700;
+    align-self: flex-start;
+}
+
+.actor-details-text {
+    font-size: .95rem;
+}
+
+.actor-details-grid {
+    display: grid;
+    align-content: flex-start;
+    align-items: center;
+    grid-gap: 1rem;
+    grid-template-columns: auto auto;
+    margin-left: 3rem;
+    margin-top: .2rem;
+    line-height: 1rem;
+}
+
+.actor-details-btn-grid {
+    display: grid;
+    justify-items: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    grid-template-areas: 
+        "edit delete";
+    grid-gap: .5rem;
+    margin-top: .5rem;
+    margin-top: 1rem;
+}

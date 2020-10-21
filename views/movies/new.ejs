@@ -6,9 +6,11 @@
 <!-- tells server that form is sending multipart data which could include a file (for our cover image) -->
 <!-- removed enctype="multipart/form-data" -->
 <form action="/movies" method="POST">
-    <%- include('_form_fields')%> 
+    <%- include('_form_fields')%>
     <!-- anchor tags are used to link things  -->
     <!-- buttons used to interact with forms or other objects  -->
-    <a href="/movies">Odustani</a>
-    <button type="submit">Kreiraj</button>
+    <div class="form-row form-row-end btn-row">
+        <a class="btn btn-danger" href="/movies">Odustani</a>
+        <button class="btn btn-primary" type="submit">Kreiraj</button>
+    </div>
 </form>

@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
     try{
         moviesByRating = await Movie.find().sort({rating: 'desc'}).limit(100).exec()
         res.render('top', {
-            moviesByRating: moviesByRating,
+            moviesByRating: moviesByRating
         })
     }catch{
         moviesByRating = []

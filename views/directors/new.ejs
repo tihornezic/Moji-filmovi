@@ -3,9 +3,11 @@
 <!-- to use post method, you can only use forms -->
 
 <form action="/directors" method="POST">
-    <%- include('_form_fields')%> 
+    <%- include('_form_fields')%>
     <!-- anchor tags are used to link things  -->
     <!-- buttons used to interact with forms or other objects  -->
-    <a href="/directors">Odustani</a>
-    <button type="submit">Kreiraj</button>
+    <div class="form-row form-row-end btn-row">
+        <a class="btn btn-danger" href="/directors">Odustani</a>
+        <button class="btn btn-primary" type="submit">Kreiraj</button>
+    </div>
 </form>

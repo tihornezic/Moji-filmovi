@@ -1,17 +1,22 @@
 <h2>Pretraži glumce</h2>
 
 <form action="/actors" method="GET">
-    <label">Ime</label>
-    <input type="text" name="name" value="<%= searchOptions.name %> ">
-    <button type="submit">Traži</button>
+    <div class="form-row">
+        <div class="form-item">
+            <label>Ime</label>
+                <input type="text" name="name" value="<%= searchOptions.name %>">
+        </div>
+    </div>
+    <div class="form-row form-row-end">
+        <button class="btn btn-primary" type="submit">Traži</button>
+    </div>
 </form>
 
 <br>
 <br>
 
-<div>
+<div class="movie-grid">  
     <% actors.forEach(actor => { %>
-    <a href="/actors/<%= actor.id %> "><img height="150" width="100" 
-        src="<%= actor.coverImagePath %>"></a></a>
+    <a href="/actors/<%= actor.id %> "><img height="225" width="150" src="<%= actor.coverImagePath %>"></a></a>
     <% }) %>
 </div>

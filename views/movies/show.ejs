@@ -1,25 +1,36 @@
 <h2><%= movie.title %></h2>
-<img width="200" heigh="300" src="<%= movie.coverImagePath %>">
-<br>
-<br>
-<div>Redatelj: <%= movie.director.name %></div>
-<div>Godina izlaska: <%= movie.releaseYear.toDateString().split(' ').splice(3)%></div>
-<div>Trajanje: <%= movie.duration %>'</div>
-<div>Žanr: <%= movie.genre %> </div>
-<div>Uloge:
-
-    <% if(actorsOnMovie.actor.length > 0) { %>
-        <% actorsOnMovie.actor.forEach(actor => { %>
+<br><br>
+<div class="movie-details">
+    <div>
+        <img height="300" width="200" src="<%= movie.coverImagePath %>">
+        <div class="movie-details-btn-grid">
+            <a class="btn btn-primary" href="/movies/<%= movie.id %>/edit">Uredi</a>
+            <!-- ../ up one directory -->
+            <%- include('../partials/deleteForm', {url: `/movies/${movie.id}`}) %>
+            <a class="btn btn-primary movie-details-director-button" href="/directors/<%= movie.director.id %>">Pogledaj
+                Redatelja</a>
+        </div>
+    </div>
+    <div class="movie-details-grid">
+        <div class="movie-details-label">Redatelj: </div>
+        <div class="movie-details-text"><%= movie.director.name %></div>
+        <div class="movie-details-label">Godina izlaska: </div>
+        <div class="movie-details-text"><%= movie.releaseYear.toDateString().split(' ').splice(3)%></div>
+        <div class="movie-details-label">Trajanje: </div>
+        <div class="movie-details-text"><%= movie.duration %>'</div>
+        <div class="movie-details-label">Žanr: </div>
+        <div class="movie-details-text"><%= movie.genre %></div>
+        <div class="movie-details-label">Uloge: </div>
+        <div class="movie-details-text"><% if(actorsOnMovie.actor.length > 0) { %>
+            <% actorsOnMovie.actor.forEach(actor => { %>
             <a href="/actors/<%= actor.id %>"><%= actor.name %></a>
-        <% }) %>
-    <% } else { %>
-        <span>-</span>
-    <% } %>
+            <% }) %>
+            <% } else { %>
+            <span>-</span>
+            <% } %></div>
+        <div class="movie-details-label">Ocjena: </div>
+        <div class="movie-details-text"><%= movie.rating %></div>
+        <div class="movie-details-label">Komentar: </div>
+        <div class="movie-details-text"><%= movie.description %></div>
+    </div>
 </div>
-<div>Ocjena: <%= movie.rating %> </div>
-<div>Komentar: <%= movie.description %></div>
-
-<a href="/movies/<%= movie.id %>/edit">Uredi</a>
-<!-- ../ up one directory -->
-<%- include('../partials/deleteForm', {url: `/movies/${movie.id}`}) %>
-<a href="/directors/<%= movie.director.id %>">Pregledaj Redatelja</a>

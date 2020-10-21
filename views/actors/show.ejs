@@ -1,17 +1,25 @@
-<h2><%= actor.name %> </h2>
-<img width="200" heigh="300" src="<%= actor.coverImagePath %>">
-<div>Pojavljivanja:
-
-    <% if(movie.length > 0) { %> 
-    <% movie.forEach(movie => { %>
-        <a href="/movies/<%= movie.id %>"><%= movie.title %></a>
-    <% }) %>
-    <% } else { %> 
-        <label>-</label>
-    <% } %> 
-
+<h2><%= actor.name %></h2>
+<br><br>
+<div class="actor-details">
+    <div>
+        <img width="200" heigh="300" src="<%= actor.coverImagePath %>">
+        <div class="actor-details-btn-grid">
+            <a class="btn btn-primary" href="/actors/<%= actor.id %>/edit">Uredi</a>
+            <%- include('../partials/deleteForm', {url: `/actors/${actor.id}`}) %>
+        </div>
+    </div>
+    <div class="actor-details-grid">
+        <div class="actor-details-label">Pojavljivanja: </div>
+        <div class="actor-details-text">
+            <% if(movie.length > 0) { %>
+            <% movie.forEach(movie => { %>
+            <a href="/movies/<%= movie.id %>"><%= movie.title %></a>
+            <% }) %>
+            <% } else { %>
+            <label>-</label>
+            <% } %>
+        </div>
+        <div class="actor-details-label">Opis: </div>
+        <div class="actor-details-text"><%= actor.description %></div>
+    </div>
 </div>
-<div>Komentar: <%= actor.description %></div>
-
-<a href="/actors/<%= actor.id %>/edit">Uredi</a>
-<%- include('../partials/deleteForm', {url: `/actors/${actor.id}`}) %>

@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
     } catch {
         res.render('directors/new', {
             director: director,
-            errorMessage: 'Error creating Director'
+            errorMessage: 'Pogreška pri kreiranju redatelja'
         })
     }
 

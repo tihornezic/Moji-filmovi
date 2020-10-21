@@ -257,9 +257,9 @@ async function renderFormPage(res, movie, form, hasError = false) {
         if(hasError){
             // if we are on the edit form
             if(form == 'edit'){
-                params.errorMessage = 'Error Updating Movie'
+                params.errorMessage = 'Pogreška pri uređivanju filma'
             }else{
-                params.errorMessage = 'Error Creating Movie'
+                params.errorMessage = 'Pogreška pri kreiranju filma'
             }
         }
         // to dynamically render form

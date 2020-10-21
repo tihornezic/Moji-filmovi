@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
             searchOptions: req.query
         })
     } catch {
-
+        res.redirect('/')
     }
 })
 
@@ -54,7 +54,7 @@ router.post('/', async (req, res) => {
     } catch {
         res.render('actors/new', {
             actor: actor,
-            errorMessage: 'Error creating Actor'
+            errorMessage: 'Pogreška pri kreiranju glumca'
         })
     }
 })
